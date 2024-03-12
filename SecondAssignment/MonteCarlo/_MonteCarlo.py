@@ -6,6 +6,9 @@
 import numpy as np
 from mpi4py import MPI
 
+MPI.Init()
+comm = MPI.COMM_WORLD()
+
 class MonteCarlo(object):
     def __init__(self, f, a, b, x, n):
         self.MC_Integration = []
@@ -14,6 +17,8 @@ class MonteCarlo(object):
         self.b = limit_b
         self.x = x_array
         self.n = n
+        self.nworkers = self.comm.Get_size()
+        self.rank = self.comm.Get_rank()
 
     def integration(f, a, b, x, n):
 
