@@ -18,16 +18,22 @@ class MonteCarlo:
         self.npoints = npoints
         self.rs = np.random.SeedSequence(seed)
 
-    def integration(self):
-
+    def montecarlo(self):
+        """
+        Creates a random distribution shaped as exp(|x-x0|) and 
+        calculates the mean of the given function, the standard deviation and the integral 
+        with Monte Carlo method
+        """
         datapoints = self.N/self.n_workers
-
-        partial_integral = np.zeros(datapoints)
-        integral = np.array(0.0,dtype = np.double)
+        ranworker = self.rs.spawn(self.nworkers)    # spawn over workers
+        randata = ranworker.spawn(datapoints)
+        sigma, x0 = randata.spawn(2)
+        xarray = np.linspace(-4*sigma, 4*sigma, datapoints)
+        xi = np.exp(np.abs(xarray-x0))
         
         for i in range(datapoints):
-            x = random_x_loc[i]
-            partial_integral[i] = self.f(x)
-            partial_integral = partial_integral * (b-a)/self.N
-        return np.sum(partial_integral)
+            partial_avg = np.mean(self.function(xi[i]))
+            partial_std = np.std(self.function(xi[i]))
+            partial_integral = partial_avg*(sigma[i])
+       
     
