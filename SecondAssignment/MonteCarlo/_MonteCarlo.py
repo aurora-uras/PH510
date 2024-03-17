@@ -1,21 +1,22 @@
-# ====================================
-# Monte Carlo integration in parallel
-# ====================================
+"""
+Module providing Monte Carlo parallel evaluation
+"""
 import numpy as np
 from mpi4py import MPI
 
 comm = MPI.COMM_WORLD()
+size = comm.Get_size()
+rank = comm.Get_rank()
 
-class MonteCarlo(object):
-    def __init__(self, f, a, b, x, N, nworkers, rank):
+class MonteCarlo:
+    """
+    Monte Carlo integral evaluation in series and parallel
+    """
+    def __init__(self, function, n_points, seed):
         self.MC_Integration = []
-        self.f = function
-        self.a = limit_a
-        self.b = limit_b
-        self.x = x_array
-        self.N = data
-        self.nworkers = self.comm.Get_size()
-        self.rank = self.comm.Get_rank()
+        self.function = function
+        self.npoints = npoints
+        self.rs = np.random.SeedSequence(seed)
 
     def integration(self):
 
