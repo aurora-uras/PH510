@@ -1,5 +1,6 @@
 """
-Module providing Monte Carlo parallel evaluation
+Module providing Monte Carlo parallel evaluation of integral of a function, 
+together with mean value and variance of the function
 """
 import numpy as np
 from mpi4py import MPI
