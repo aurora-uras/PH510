@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import MonteCarlo._MonteCarlo as MC
+import MonteCarlo._montecarlo as MC
 from numpy.random import Generator, SeedSequence, MT19937
 from mpi4py import MPI
 
