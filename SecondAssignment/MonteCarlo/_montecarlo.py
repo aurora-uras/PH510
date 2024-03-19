@@ -36,9 +36,4 @@ class MonteCarlo:
 
 			if i == 0:
 				print("Integral =", integral, "\n average =", avg/size,
-					"standard deviation =", std,)
-
-
-                
-       
-    
+					"standard deviation =", std,) 
