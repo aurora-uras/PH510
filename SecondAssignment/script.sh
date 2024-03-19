@@ -45,7 +45,7 @@ module load mpi/2021.6.0
 #------------------------------------------------------
 
 # Modify the line below to run your program
-mpirun -np $SLURM_NTASKS python3 my_code.py
+mpirun -np $SLURM_NTASKS assignment2.py
 
 #======================================================
 # Epilogue script to record job endtime and runtime
