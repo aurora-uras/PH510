@@ -13,8 +13,7 @@ class MonteCarlo:
     """
     Monte Carlo integral evaluation in series and parallel
     """
-    def __init__(self, function, n_points, seed):
-        self.MC_Integration = []
+    def __init__(self, function, npoints, seed):
         self.function = function
         self.npoints = npoints
         self.rs = np.random.SeedSequence(seed)
