@@ -30,15 +30,14 @@ class MonteCarlo:
             partial_std = np.std(self.function(self.xi[i]))
             partial_integral = (max(self.xi)-min(self.xi))/datapoints *np.sum(self.function(self.xi))
 			
-            avg = comm.reduce(partial_avg, MPI.SUM, 0)/size
+            avg = comm.reduce(partial_avg, MPI.SUM, 0)
             std = comm.reduce(partial_integral, MPI.SUM, 0)
             integral = comm.reduce(partial_integral, MPI.SUM, 0)
 
 			if i == 0:
-				print("Integral =", integral, "\n average =", avg,
+				print("Integral =", integral, "\n average =", avg/size,
 					"standard deviation =", std,)
 
-		return
 
                 
        
