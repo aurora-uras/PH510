@@ -112,11 +112,11 @@ if __name__ == "__main__":
     lattice_x, lattice_y = np.mgrid[
         0 : L : lattice_points * 1j, 0 : L : lattice_points * 1j
     ]
-    res =  poisson_approximation_fixed_step(lattice_x.ravel(), lattice_y.ravel())
+    res =  poisson_approximation(lattice_x.ravel(), lattice_y.ravel())
 
-    res1 = poisson_approximation_fixed_step(5, 5)
-    res2 = poisson_approximation_fixed_step(0, 2.5)
-    res3 = poisson_approximation_fixed_step(0, 0)
+    res1 = poisson_approximation(5, 5)
+    res2 = poisson_approximation(0, 2.5)
+    res3 = poisson_approximation(0, 0)
     print("case a)", res1, res2, res3)
 
     plot(lattice_x, lattice_y, res)
@@ -128,7 +128,7 @@ if __name__ == "__main__":
     lattice_x, lattice_y = np.mgrid[
         0 : L : lattice_points * 1j, 0 : L : lattice_points * 1j
     ]
-    z = poisson_approximation_fixed_step(lattice_x.ravel(), lattice_y.ravel()).reshape(
+    z = poisson_approximation(lattice_x.ravel(), lattice_y.ravel()).reshape(
         lattice_x.shape
     )
 
@@ -141,8 +141,8 @@ if __name__ == "__main__":
     lattice_x, lattice_y = np.mgrid[
         0 : L : lattice_points * 1j, 0 : L : lattice_points * 1j
     ]
-    print("case c)", poisson_approximation_fixed_step(5,5))
-    z = poisson_approximation_fixed_step(lattice_x.ravel(), lattice_y.ravel()).reshape(
+    print("case c)", poisson_approximation(5,5))
+    z = poisson_approximation(lattice_x.ravel(), lattice_y.ravel()).reshape(
         lattice_x.shape
     )
     plot(lattice_x, lattice_y, z)
