@@ -59,16 +59,17 @@ def g3(x):
 @np.vectorize
 def poisson_approximation(*A):
     """
-    
+    Returns the potential across the grid for given boundary conditions
     """
-    gf = 0
+    exit = []
     result = 0
     F = 0
     for i in range(N):
         x = list(A)
         while True:
             if x[0] <= 0 or x[0] >= L or x[1] <= 0 or x[1] >= L:
-			# conclude random walk if exits boundaries
+                exit.append(x)
+	    # conclude RW if exits boundaries and save exit point
                 break
             r = rangen.random()
             if r < 0.25:
@@ -85,55 +86,56 @@ def poisson_approximation(*A):
                 x[1] += h
 
             F += f(x) * h ** 2
-        gf += g(x) / N
-    result = gf - F
-    return result, gf
+        result += g(x) / N
+    result = result - F
+    return result, exit
 
-def plot(x, y, res):
-    # Function for plotting the potential and the green function
+def plot_potential(x, y, res):
+    # Function for plotting the potential
     pot = res[0]
     pot = pot.reshape(lattice_x.shape)
-    gf = res[1]
-    gf = gf.reshape(lattice_x.shape)
 
-    fig, (ax1, ax2) = plt.subplots(1,2)
-    ax1.imshow(np.array(pot), cmap=cm.jet)
-    ax1.xlabel("X (Meters)")
-    ax1.ylabel("Y (Meters)")
-    cb = ax1.colorbar(location='right', label = "Potential (V)")
-
-    ax2.imshow(np.array(gf), cmap=cm.jet)
-    ax2.xlabel("X (Meters)")
-    ax2.ylabel("Y (Meters)")
-    cb = ax2.colorbar(location='right', label = "Green Function")
+    plt.imshow(np.array(pot), cmap=cm.jet)
+    plt.xlabel("x (cm)")
+    plt.ylabel("y (cm)")
+    cb = plt.colorbar(location='right', label = "Potential (V)")
+    plt.show()
 
 if __name__ == "__main__":
+    lattice_x, lattice_y = np.meshgrid(np.linspace(0, L, lattice_points), 
+			 (0, L, lattice_points))
     # a) all edges at 1V
-    lattice_x, lattice_y = np.mgrid[
-        0 : L : lattice_points * 1j, 0 : L : lattice_points * 1j
-    ]
-    res =  poisson_approximation(lattice_x.ravel(), lattice_y.ravel())
-
-    res1 = poisson_approximation(5, 5)
-    res2 = poisson_approximation(0, 2.5)
-    res3 = poisson_approximation(0, 0)
-    print("case a)", res1, res2, res3)
+    z =  poisson_approximation(lattice_x.ravel(), lattice_y.ravel())
+    pot = z[0].reshace(xx.shape)
 
     plot(lattice_x, lattice_y, res)
     plt.savefig("case_a.png")
+    potA1 = pot[np.where(lattice_x <= 5), np.where(lattice_y <= 5)]
+    potA2 = pot[np.where(lattice_x <= 2.5), np.where(lattice_y <= 2.5)]
+    potA3 = pot[np.where(lattice_x <= 0), np.where(lattice_y <= 2.5)]
+    potA4 = pot[np.where(lattice_x <= 0), np.where(lattice_y <= 0)]
+
+    print("case a)", potA[0,0], potB[0, 0], potC[0, 0], potD[0, 0])
+    plot_potential(lattice_x, lattice_y, z)
+    plt.savefig("potential_a.png")
+    plt.clf()
 
     # b) top and bottom edges at +1V, left and right at -1V
     f = f
     g = g2
-    lattice_x, lattice_y = np.mgrid[
-        0 : L : lattice_points * 1j, 0 : L : lattice_points * 1j
-    ]
-    z = poisson_approximation(lattice_x.ravel(), lattice_y.ravel()).reshape(
-        lattice_x.shape
-    )
+	
+    z =  poisson_approximation(lattice_x.ravel(), lattice_y.ravel())
+    pot = z[0]
+    pot = pot.reshape(lattice_x.shape)
+    potA1 = pot[np.where(lattice_x <= 5), np.where(lattice_y <= 5)]
+    potA2 = pot[np.where(lattice_x <= 2.5), np.where(lattice_y <= 2.5)]
+    potA3 = pot[np.where(lattice_x <= 0), np.where(lattice_y <= 2.5)]
+    potA4 = pot[np.where(lattice_x <= 0), np.where(lattice_y <= 0)]
 
-    plot(lattice_x, lattice_y, z)
+    print("case b)", potA[0,0], potB[0, 0], potC[0, 0], potD[0, 0])
+    plot_potential(lattice_x, lattice_y, z)
     plt.savefig("potential_b.png")
+    plt.clf()
 
     # c) top and left edges at +2V, bottom at 0V and right at -4V
     f = f
@@ -141,9 +143,15 @@ if __name__ == "__main__":
     lattice_x, lattice_y = np.mgrid[
         0 : L : lattice_points * 1j, 0 : L : lattice_points * 1j
     ]
-    print("case c)", poisson_approximation(5,5))
-    z = poisson_approximation(lattice_x.ravel(), lattice_y.ravel()).reshape(
-        lattice_x.shape
-    )
-    plot(lattice_x, lattice_y, z)
+    z =  poisson_approximation(lattice_x.ravel(), lattice_y.ravel())
+    pot = z[0]
+    pot = pot.reshape(lattice_x.shape)
+    potA1 = pot[np.where(lattice_x <= 5), np.where(lattice_y <= 5)]
+    potA2 = pot[np.where(lattice_x <= 2.5), np.where(lattice_y <= 2.5)]
+    potA3 = pot[np.where(lattice_x <= 0), np.where(lattice_y <= 2.5)]
+    potA4 = pot[np.where(lattice_x <= 0), np.where(lattice_y <= 0)]
+
+    print("case c)", potA[0,0], potB[0, 0], potC[0, 0], potD[0, 0])
+    plot_potential(lattice_x, lattice_y, z)
     plt.savefig("potential_c.png")
+    plt.clf()
