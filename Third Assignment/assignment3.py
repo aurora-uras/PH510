@@ -13,11 +13,9 @@ ss = SeedSequence(12345)    # Generate a sequence with intial seed
 sworker = ss.spawn(size)    # spawn the sequence on the workers
 rangen = Generator(MT19937(sworker[rank]))   # random number generator
 
-L = 10e-2  # Grid size = 10cm
+L = 10  # Grid size = 10cm
 lattice_points = 10  # Number of Points in lattice
 h = L / lattice_points  # Lattice size
-
-EPSILON0 = 8.854e-12  # Permittivity of Vaccum
 N = 20  # Number of Random Walks
 
 
